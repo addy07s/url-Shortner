@@ -10,11 +10,11 @@ async function generatenewShortUrl(req, res) {
             return res.status(400).json({ error: "Bad request, give url" });
         }
 
-        const shortid = shortId.generate(); // Generate a unique short ID
-        console.log("Generated Short ID:", shortid); // Debugging
+        const generatedShortid = shortId.generate(); // Generate a unique short ID
+        //console.log("Generated Short ID:", generatedShortid); // Debugging
 
         const newUrl = new urlModel({
-            shortid: shortid, // Matches the schema
+            shortid: generatedShortid, // Matches the schema
             redirectedUrl: body.url,
             visitedHistory: [],
         });
@@ -23,7 +23,7 @@ async function generatenewShortUrl(req, res) {
         console.log("Saved URL to database:", newUrl); // Debugging
 
         // Respond with success and the short URL
-        return res.status(201).json({ message: "Short URL created", shortID: shortid });
+        return res.status(201).json({ message: "Short URL created", shortID: generatedShortid });
     } catch (error) {
         console.error("Error in generating short URL:", error); // Log error details
         return res.status(500).json({ error: "Internal server error" });
